@@ -1,6 +1,15 @@
 
 'use strict';
 
+// ======= Display the Title of the Page - Salmon Cookie Sales======
+// 1 Need target
+var h1Target = document.getElementById('pageTitle');
+// 2 Create content
+var newText = 'Salmon Cookie Sales';
+// 3. add content to the target
+h1Target.textContent = newText;
+//==============================================================
+
 // Task: Create object literals for each shop LOCATION that outputs the following:
 // 1. Min Customers per Hour
 // 2. Max Customers per Hour
@@ -16,8 +25,6 @@ var seattleLocation = {
   cookiesSoldPerHour : [],
   // per day
   totalCookiesSoldPerDay : 0,
-
-  //TODO: Should these below methods exist outside of the seattleLocation object???
 
   // 4. Method to generate random number of customers per hour (with Min and Max) - Objects/Math/random
   calculateRandNumOfCust : function() {
@@ -67,23 +74,43 @@ seattleLocation.calculateStoreInfo = function() {
   //uses the cookies sold per hour to calc how many cookies were sold each day
   this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
 };
+// Display the values of each array as an UnOrderedLIst in the browser
 
-// Functions to write store name, hours, and cookies per day sold to document
-// TODO: This is still seattle location specific - make dynamic
+// Writes store name and Hourly cookies Sold
 seattleLocation.renderStoreInfoToPage = function() {
   document.write(this.name);
-  // Display the values of each array as an UnOrderedLIst in the browser
+  // Writes Hour and Cookies sold "6am: number cookies"
   for(var i = 0; i < this.hoursOpen.length; i++) {
     document.write('<ul>' + this.hoursOpen[i] + ': ' + this.cookiesSoldPerHour[i] + ' cookies </ul>');
   }
-  // Calculate the Sum of these Hourly Totals, Display it, too
+  // Writes the total Cookie Sales of the Day
   document.write('<ul> Total: ' + this.totalCookiesSoldPerDay + 'cookies </ul>');
 };
+//======== replace document.write with getElementById ===========
+// 1 Need target
+// having a targetable element in the HTML, an id
+// referring to it in the JS with <document.getElementById()>
+// 2 Create content
+// 3 add the content to the target
+//=================================================================
+
+for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
+  // 1 Need a target - retrieving targetable id from HTML
+  var unOrderedListEl = document.getElementById('hourOfOperation');
+  // 2 creating content - document.createElement() MAKES a DOM element
+  //DOES NOT put it on the PAGE
+  var newListItemEl = document.createElement('li');
+  newListItemEl.textContent = seattleLocation.hoursOpen[i];
+  // 3 add content to target
+  //append the new li to the unordered list
+  unOrderedListEl.appendChild(newListItemEl);
+}
 
 // FUNCTION CALLS for Seattle location
 seattleLocation.calculateStoreInfo();
 seattleLocation.renderStoreInfoToPage();
 
+// ========^^^ replace document.write with getElementById ^^====
 // ====================above here is all Seattle Location object =================
 
 // =============Tokyo Location=========================
