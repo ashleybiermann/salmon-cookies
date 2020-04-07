@@ -65,9 +65,11 @@ var seattleLocation = {
     this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
   },
 };
+// ====================above here is all Seattle Location object =================
 
 // Functions to write store name, hours, and cookies per day sold to document
-var writeToDocument = function() {
+// TODO: This is still seattle location specific - make dynamic
+var renderStoreInfoToPage = function() {
   document.write(seattleLocation.name);
   // Display the values of each array as an UnOrderedLIst in the browser
   for(var i = 0; i < seattleLocation.hoursOpen.length; i++) {
@@ -79,7 +81,7 @@ var writeToDocument = function() {
 
 // FUNCTION CALLS
 seattleLocation.calculateStoreInfo();
-writeToDocument();
+renderStoreInfoToPage();
 
 
 
