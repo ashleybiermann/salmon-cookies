@@ -55,35 +55,36 @@ var seattleLocation = {
     }
     return totalCookiesSoldPerDay;
   },
-
-  //groups all of the functions together, in one function call, and links them together
-  calculateStoreInfo : function() {
-    var numCustPerHour = this.calculateNumCustPerHour();
-
-    //uses numCustPerHour to calculate how many cookies were sold each hour
-    this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
-
-    //uses the cookies sold per hour to calc how many cookies were sold each day
-    this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
-  },
 };
-// ====================above here is all Seattle Location object =================
+
+//groups all of the functions together, in one function call, and links them together
+seattleLocation.calculateStoreInfo = function() {
+  var numCustPerHour = this.calculateNumCustPerHour();
+
+  //uses numCustPerHour to calculate how many cookies were sold each hour
+  this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
+
+  //uses the cookies sold per hour to calc how many cookies were sold each day
+  this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
+};
 
 // Functions to write store name, hours, and cookies per day sold to document
 // TODO: This is still seattle location specific - make dynamic
-var renderStoreInfoToPage = function() {
-  document.write(seattleLocation.name);
+seattleLocation.renderStoreInfoToPage = function() {
+  document.write(this.name);
   // Display the values of each array as an UnOrderedLIst in the browser
-  for(var i = 0; i < seattleLocation.hoursOpen.length; i++) {
-    document.write('<ul>' + seattleLocation.hoursOpen[i] + ': ' + seattleLocation.cookiesSoldPerHour[i] + ' cookies </ul>');
+  for(var i = 0; i < this.hoursOpen.length; i++) {
+    document.write('<ul>' + this.hoursOpen[i] + ': ' + this.cookiesSoldPerHour[i] + ' cookies </ul>');
   }
   // Calculate the Sum of these Hourly Totals, Display it, too
-  document.write('<ul> Total: ' + seattleLocation.totalCookiesSoldPerDay + 'cookies </ul>');
+  document.write('<ul> Total: ' + this.totalCookiesSoldPerDay + 'cookies </ul>');
 };
 
 // FUNCTION CALLS for Seattle location
 seattleLocation.calculateStoreInfo();
-renderStoreInfoToPage();
+seattleLocation.renderStoreInfoToPage();
+
+// ====================above here is all Seattle Location object =================
 
 // =============Tokyo Location=========================
 var tokyoLocation = {
@@ -231,7 +232,7 @@ var dubaiLocation = {
 
 // Functions to write store name, hours, and cookies per day sold to document
 // TODO: This is still Dubai location specific - make dynamic
-renderStoreInfoToPage = function() {
+var renderStoreInfoToPage = function() {
   document.write(dubaiLocation.name);
   // Display the values of each array as an UnOrderedLIst in the browser
   for(var i = 0; i < dubaiLocation.hoursOpen.length; i++) {
