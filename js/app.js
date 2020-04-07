@@ -1,3 +1,4 @@
+
 'use strict';
 
 // Task: Create object literals for each shop LOCATION that outputs the following:
@@ -6,6 +7,7 @@
 // 3. Average Cookies Purchased per Customer
 // =============Seattle Location=========================
 var seattleLocation = {
+  name : 'Seattle',
   minHourlyCustomers : 23,
   maxHourlyCustomers : 65,
   avgCookiesPerCustomer : 6.3,
@@ -24,14 +26,15 @@ var seattleLocation = {
 
   // define another method that uses a for loop and calls calculateRandNumOfCust
   calculateNumCustPerHour : function(){
-    // -put into an array from there // var numCustPerHour = []
-    //TODO: How do I extract values from this array to use?
+    // -put into an array from there. var numCustPerHour = []
     var numCustPerHour = [];
     for(var i = 0; i < this.hoursOpen.length; i++) {
       numCustPerHour.push(this.calculateRandNumOfCust());
     }
     return numCustPerHour;
   },
+
+  // NOTE: when using a forloop, the i references the index in the array.length, so that's the same array you use when adding code to the code block { }
 
   // 5. For each Hour of Operation (6:00AM to 8:00PM all stores), calculate the amount of Cookies Sold
 
@@ -54,21 +57,34 @@ var seattleLocation = {
   //groups all of the functions together, in one function call, and links them together
   calculateStoreInfo : function() {
     var numCustPerHour = this.calculateNumCustPerHour();
+
+    //uses numCustPerHour to calculate how many cookies were sold each hour
     this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
+
+    //uses the cookies sold per hour to calc how many cookies were sold each day
     this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
   },
 };
 
+// Functions to write store name, hours, and cookies per day sold to document
+var writeToDocument = function() {
+  document.write(seattleLocation.name);
+  // Display the values of each array as an UnOrderedLIst in the browser
+  for(var i = 0; i < seattleLocation.hoursOpen.length; i++) {
+    document.write('<ul>' + seattleLocation.hoursOpen[i] + ': ' + seattleLocation.cookiesSoldPerHour[i] + ' cookies </ul>');
+  }
+  // Calculate the Sum of these Hourly Totals, Display it, too
+  document.write('<ul> Total: ' + seattleLocation.totalCookiesSoldPerDay + 'cookies </ul>');
+};
+
+// FUNCTION CALLS
 seattleLocation.calculateStoreInfo();
+writeToDocument();
 
-// NOTE: when using a forloop, the i references the index in the array.length, so that's the same array you use when adding code to the code block { }
 
-// Display the values of each array as an UnOrderedLIst in the browser
-for(var i = 0; i < seattleLocation.hoursOpen.length; i++) {
-  document.write('<ul>' + seattleLocation.hoursOpen[i] + ': ' + seattleLocation.cookiesSoldPerHour[i] + ' cookies </ul>');
-}
 
-// Calculate the Sum of these Hourly Totals, Display it, too
-document.write('<ul> Total: ' + seattleLocation.totalCookiesSoldPerDay + 'cookies </ul>');
+
+
+
 
 
