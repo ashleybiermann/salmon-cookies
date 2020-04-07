@@ -12,25 +12,25 @@ var seattleLocation = {
   maxHourlyCustomers : 65,
   avgCookiesPerCustomer : 6.3,
   // 4. Method to generate random number of customers per hour (with Min and Max) - Objects/Math/random
-  calculateRandNumOfCust : function(min, max) {
-    min = this.minHourlyCustomers;
-    max = this.maxHourlyCustomers;
-    return Math.random() * (max - min) + min;
+  calculateRandNumOfCust : function() {
+    var min = this.minHourlyCustomers;
+    var max = this.maxHourlyCustomers;
+    return Math.round(Math.random() * (max - min) + min);
   },
 
   // define another method that uses a for loop and calls calculateRandNumOfCust
+  hoursOpen : ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'],
+
   calculateNumCustPerHour : function(){
+    // -put into an array from there // var numCustPerHour = []
+    
     var numCustPerHour = [];
-    for(var i = 0; i < hoursOpen.length; i++) {
-      this.calculateRandNumOfCust;
+    for(var i = 0; i < this.hoursOpen.length; i++) {
+      numCustPerHour.push(this.calculateRandNumOfCust());
     }
+    return numCustPerHour;
   },
-
-  // put into an array from there
 };
-
-var hoursOpen = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
-
 
 console.log(seattleLocation);
 
