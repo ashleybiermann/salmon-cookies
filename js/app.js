@@ -128,7 +128,7 @@ seattleLocation.renderToPage();
 // ====above here is all Seattle Location object ============
 
 // ==== Constructor function for city loctions =============
-function storeLocation (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture) {
+function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture) {
   this.storeLocation = city;
   this.minHourlyCustomers = minHourlyCustomers;
   this.maxHourlyCustomers = maxHourlyCustomers;
@@ -137,11 +137,38 @@ function storeLocation (city, minHourlyCustomers, maxHourlyCustomers, avgCookies
   this.picture = picture;
   this.cookiesSoldPerHour = [];
   this.totalCookiesSoldPerDay = 0;
-  // TODO: 1) add methods to object. copy from object literal
-  // this.calculateRandNumOfCust =
 }
-//TODO: 2) Then - try making new stores by <var seattleLocation = new storeLocation();
-//TODO: 3) Then - place data in table
+
+// TODO: 1) add methods to object. use code from object literal
+
+Store.prototype.calculateRandNumOfCust = function(){
+  // return random number
+};
+
+Store.prototype.calculateNumCustPerHour = function(){
+  // return number of customers per hour
+};
+
+Store.prototype.calculateCookiesSoldPerHour = function(){
+  // return number of cookies sold per hour
+};
+
+Store.prototype.calculateTotalCookiesSoldPerDay = function(){
+  // return total number of cookies sold each day
+};
+
+Store.prototype.calculateStoreInfo = function(){
+  // calls Rand, NumCust, CookiesperHour, totalCookies functions
+};
+
+Store.prototype.renderToPage = function(){
+  // renders to page - only one <ul> and many <li> in it
+};
+
+
+
+//TODO: 2) Then - try making new stores by <var seattleLocation = new Store();
+//TODO: 3) Then - place data in table using comments from line 78
 
 // =============Tokyo Location=========================
 //
