@@ -137,8 +137,11 @@ function storeLocation (city, minHourlyCustomers, maxHourlyCustomers, avgCookies
   this.picture = picture;
   this.cookiesSoldPerHour = [];
   this.totalCookiesSoldPerDay = 0;
-  // this.calculateRandNumOfCust = 
+  // TODO: 1) add methods to object. copy from object literal
+  // this.calculateRandNumOfCust =
 }
+//TODO: 2) Then - try making new stores by <var seattleLocation = new storeLocation();
+//TODO: 3) Then - place data in table
 
 // =============Tokyo Location=========================
 //
