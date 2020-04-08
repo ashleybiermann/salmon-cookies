@@ -25,6 +25,7 @@ var seattleLocation = {
   cookiesSoldPerHour : [],
   // per day
   totalCookiesSoldPerDay : 0,
+  picture : 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg',
 
   // 4. Method to generate random number of customers per hour (with Min and Max) - Objects/Math/random
   calculateRandNumOfCust : function() {
@@ -93,7 +94,7 @@ seattleLocation.renderStoreInfoToPage = function() {
 // 2 Create content
 // 3 add the content to the target
 //=================================================================
-
+// =====Places each Hour of Operation into its own List Item =======
 for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
   // 1 Need a target - retrieving targetable id from HTML
   var unOrderedListEl = document.getElementById('hourOfOperation');
@@ -105,6 +106,26 @@ for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
   //append the new li to the unordered list
   unOrderedListEl.appendChild(newListItemEl);
 }
+
+seattleLocation.renderToPage = function() {
+  // 1. Find target
+  var targetUlEl = document.getElementById('cookieStore');
+  // 2. Create Content
+  // a. li
+  var newLiEl = document.createElement('li');
+  // b. text then image
+  var liText = this.hoursOpen + ': ' + this.cookiesSoldPerHour + ' cookies';
+  newLiEl.textContent = liText;
+
+  // i. src link for image
+  var newImageEl = document.createElement('img');
+  newImageEl.src = this.picture;
+  newLiEl.appendChild(newImageEl);
+  console.log(newLiEl);
+  // 3. Add content to the target
+  targetUlEl.appendChild(newLiEl);
+};
+seattleLocation.renderToPage();
 
 // FUNCTION CALLS for Seattle location
 seattleLocation.calculateStoreInfo();
