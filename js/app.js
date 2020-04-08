@@ -8,127 +8,129 @@ var h1Target = document.getElementById('pageTitle');
 var newText = 'Salmon Cookie Sales';
 // 3. add content to the target
 h1Target.textContent = newText;
-//==============================================================
+// //==============================================================
 
-// Task: Create object literals for each shop LOCATION that outputs the following:
-// 1. Min Customers per Hour
-// 2. Max Customers per Hour
-// 3. Average Cookies Purchased per Customer
-// =============Seattle Location=========================
-var seattleLocation = {
-  name : 'Seattle',
-  minHourlyCustomers : 23,
-  maxHourlyCustomers : 65,
-  avgCookiesPerCustomer : 6.3,
-  hoursOpen : ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'],
-  //STORE the amount of cookies purchased per hour in an array property of the Location object
-  cookiesSoldPerHour : [],
-  // per day
-  totalCookiesSoldPerDay : 0,
-  picture : 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg',
+// // Task: Create object literals for each shop LOCATION that outputs the following:
+// // 1. Min Customers per Hour
+// // 2. Max Customers per Hour
+// // 3. Average Cookies Purchased per Customer
+// // =============Seattle Location=========================
+// // ===========LITERAL Notation ==================================================
+// var seattleLocation = {
+//   name : 'Seattle',
+//   minHourlyCustomers : 23,
+//   maxHourlyCustomers : 65,
+//   avgCookiesPerCustomer : 6.3,
+//   hoursOpen : ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'],
+//   //STORE the amount of cookies purchased per hour in an array property of the Location object
+//   cookiesSoldPerHour : [],
+//   // per day
+//   totalCookiesSoldPerDay : 0,
+//   picture : 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg',
 
-  // 4. Method to generate random number of customers per hour (with Min and Max) - Objects/Math/random
-  calculateRandNumOfCust : function() {
-    var min = this.minHourlyCustomers;
-    var max = this.maxHourlyCustomers;
-    return Math.round(Math.random() * (max - min) + min);
-  },
+//   // 4. Method to generate random number of customers per hour (with Min and Max) - Objects/Math/random
+//   calculateRandNumOfCust : function() {
+//     var min = this.minHourlyCustomers;
+//     var max = this.maxHourlyCustomers;
+//     return Math.round(Math.random() * (max - min) + min);
+//   },
 
-  // define another method that uses a for loop and calls calculateRandNumOfCust
-  calculateNumCustPerHour : function(){
-    // -put into an array from there. var numCustPerHour = []
-    var numCustPerHour = [];
-    for(var i = 0; i < this.hoursOpen.length; i++) {
-      numCustPerHour.push(this.calculateRandNumOfCust());
-    }
-    return numCustPerHour;
-  },
+//   // define another method that uses a for loop and calls calculateRandNumOfCust
+//   calculateNumCustPerHour : function(){
+//     // -put into an array from there. var numCustPerHour = []
+//     var numCustPerHour = [];
+//     for(var i = 0; i < this.hoursOpen.length; i++) {
+//       numCustPerHour.push(this.calculateRandNumOfCust());
+//     }
+//     return numCustPerHour;
+//   },
 
-  // NOTE: when using a forloop, the i references the index in the array.length, so that's the same array you use when adding code to the code block { }
+//   // NOTE: when using a forloop, the i references the index in the array.length, so that's the same array you use when adding code to the code block { }
 
-  // 5. For each Hour of Operation (6:00AM to 8:00PM all stores), calculate the amount of Cookies Sold
-  calculateCookiesSoldPerHour : function(numCustPerHour) {
-    var cookiesSoldPerHour = [];
-    for(var i = 0; i < numCustPerHour.length; i++) {
-      cookiesSoldPerHour.push(numCustPerHour[i] * this.avgCookiesPerCustomer);
-    }
-    return cookiesSoldPerHour;
-  },
+//   // 5. For each Hour of Operation (6:00AM to 8:00PM all stores), calculate the amount of Cookies Sold
+//   calculateCookiesSoldPerHour : function(numCustPerHour) {
+//     var cookiesSoldPerHour = [];
+//     for(var i = 0; i < numCustPerHour.length; i++) {
+//       cookiesSoldPerHour.push(numCustPerHour[i] * this.avgCookiesPerCustomer);
+//     }
+//     return cookiesSoldPerHour;
+//   },
 
-  calculateTotalCookiesSoldPerDay : function(cookiesSoldPerHour) {
-    var totalCookiesSoldPerDay = 0;
-    for(var i = 0; i < cookiesSoldPerHour.length; i++) {
-      totalCookiesSoldPerDay += cookiesSoldPerHour[i];
-    }
-    return totalCookiesSoldPerDay;
-  },
-};
+//   calculateTotalCookiesSoldPerDay : function(cookiesSoldPerHour) {
+//     var totalCookiesSoldPerDay = 0;
+//     for(var i = 0; i < cookiesSoldPerHour.length; i++) {
+//       totalCookiesSoldPerDay += cookiesSoldPerHour[i];
+//     }
+//     return totalCookiesSoldPerDay;
+//   },
+// };
 
-//groups all of the functions together, in one function call, and links them together
-seattleLocation.calculateStoreInfo = function() {
-  var numCustPerHour = this.calculateNumCustPerHour();
+// //groups all of the functions together, in one function call, and links them together
+// seattleLocation.calculateStoreInfo = function() {
+//   var numCustPerHour = this.calculateNumCustPerHour();
 
-  //uses numCustPerHour to calculate how many cookies were sold each hour
-  this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
+//   //uses numCustPerHour to calculate how many cookies were sold each hour
+//   this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
 
-  //uses the cookies sold per hour to calc how many cookies were sold each day
-  this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
-};
+//   //uses the cookies sold per hour to calc how many cookies were sold each day
+//   this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
+// };
+// //=================^^ LITERAL Notation Ends ==================================================
+// // //======== Direction to use document.getElementById ===========
+// // 1 Need target
+// // having a targetable element in the HTML, an id
+// // referring to it in the JS with <document.getElementById()>
+// // 2 Create content
+// // 3 add the content to the target
+// //=============================End==============================
 
-// //======== Direction to use document.getElementById ===========
-// 1 Need target
-// having a targetable element in the HTML, an id
-// referring to it in the JS with <document.getElementById()>
-// 2 Create content
-// 3 add the content to the target
-//=============================End==============================
+// // =====Places each Hour of Operation into its own List Item =======
+// // for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
+// //   // 1 Need a target - retrieving targetable id from HTML
+// //   var unOrderedListEl = document.getElementById('hourOfOperation');
+// //   // 2 creating content - document.createElement() MAKES a DOM element
+// //   //DOES NOT put it on the PAGE
+// //   var newListItemEl = document.createElement('li');
+// //   newListItemEl.textContent = seattleLocation.hoursOpen[i];
+// //   // 3 add content to target
+// //   //append the new li to the unordered list
+// //   unOrderedListEl.appendChild(newListItemEl);
+// // }
+// //=================End=========================================
 
-// =====Places each Hour of Operation into its own List Item =======
-// for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
-//   // 1 Need a target - retrieving targetable id from HTML
-//   var unOrderedListEl = document.getElementById('hourOfOperation');
-//   // 2 creating content - document.createElement() MAKES a DOM element
-//   //DOES NOT put it on the PAGE
-//   var newListItemEl = document.createElement('li');
-//   newListItemEl.textContent = seattleLocation.hoursOpen[i];
-//   // 3 add content to target
-//   //append the new li to the unordered list
-//   unOrderedListEl.appendChild(newListItemEl);
-// }
-//=================End=========================================
+// //=============== Render Seatle to Page using DOM ================
+// seattleLocation.renderToPage = function() {
+//   // 1. Find target
+//   var targetUlEl = document.getElementById('seattleCookieStore');
+//   // i. src link for image
+//   var newImageEl = document.createElement('img');
+//   newImageEl.src = this.picture;
+//   targetUlEl.appendChild(newImageEl);
+//   // forloop to create list items elements for all hours open and cookies sold per hour
+//   for(var i = 0; i < this.hoursOpen.length; i++) {
+//     // 2. Create Content
+//     // a. li
+//     var newLiEl = document.createElement('li');
+//     // b. text
+//     var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
+//     newLiEl.textContent = liText;
 
-//=============== Render Seatle to Page using DOM ================
-seattleLocation.renderToPage = function() {
-  // 1. Find target
-  var targetUlEl = document.getElementById('seattleCookieStore');
-  // i. src link for image
-  var newImageEl = document.createElement('img');
-  newImageEl.src = this.picture;
-  targetUlEl.appendChild(newImageEl);
-  // forloop to create list items elements for all hours open and cookies sold per hour
-  for(var i = 0; i < this.hoursOpen.length; i++) {
-    // 2. Create Content
-    // a. li
-    var newLiEl = document.createElement('li');
-    // b. text
-    var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
-    newLiEl.textContent = liText;
+//     // 3. Add content to the target
+//     targetUlEl.appendChild(newLiEl);
+//   }
+// };
 
-    // 3. Add content to the target
-    targetUlEl.appendChild(newLiEl);
-  }
-};
+// //======================End of render function ==================
 
-//======================End of render function ==================
-
-// FUNCTION CALLS for Seattle location
-seattleLocation.calculateStoreInfo();
-seattleLocation.renderToPage();
+// // FUNCTION CALLS for Seattle location
+// seattleLocation.calculateStoreInfo();
+// seattleLocation.renderToPage();
 
 // ====above here is all Seattle Location object ============
 
 // ======= creates variables for each store location using the constructor Store ==============================
 
+//2) Uses constructor 'Store' to create a new instance of Store for Seattle
 var cookieStoreSeattle = new Store('Seattle', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
 
 // ==== Constructor function for city loctions =============
@@ -144,7 +146,7 @@ function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCusto
   this.totalCookiesSoldPerDay = 0;
 }
 
-// TODO: 1) add methods to object. use code from object literal
+//1) add methods to object. use code from object literal
 
 Store.prototype.calculateRandNumOfCust = function(){
   // return random number
@@ -200,17 +202,31 @@ Store.prototype.calculateStoreInfo = function(){
 
 Store.prototype.renderToPage = function(){
   // renders to page - only one <ul> and many <li> in it
+  // 1. Find target
+  var targetUlEl = document.getElementById('seattleCookieStore');
+  // i. src link for image
+  var newImageEl = document.createElement('img');
+  newImageEl.src = this.picture;
+  targetUlEl.appendChild(newImageEl);
+  // forloop to create list items elements for all hours open and cookies sold per hour
+  for(var i = 0; i < this.hoursOpen.length; i++) {
+    // 2. Create Content
+    // a. li
+    var newLiEl = document.createElement('li');
+    // b. text
+    var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
+    newLiEl.textContent = liText;
+
+    // 3. Add content to the target
+    targetUlEl.appendChild(newLiEl);
+  }
   console.log('renders to page');
 };
 
-// cookieStoreSeattle.calculateRandNumOfCust();
-// cookieStoreSeattle.calculateNumCustPerHour();
-// cookieStoreSeattle.calculateCookiesSoldPerHour();
-// cookieStoreSeattle.calculateTotalCookiesSoldPerDay();
 cookieStoreSeattle.calculateStoreInfo();
 cookieStoreSeattle.renderToPage();
 
-//2) Uses constructor 'Store' to create a new instance of Store for Seattle TODO: Check on total cookies sold per hour [] and total cookies sold each day and look for values
+
 
 
 //TODO: 3) Then - place data in table using comment instructions from line 78
