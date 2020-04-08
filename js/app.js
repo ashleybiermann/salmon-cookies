@@ -130,7 +130,7 @@ seattleLocation.renderToPage();
 
 
 // =============Tokyo Location=========================
-// 
+//
 var tokyoLocation = {
   name : 'Tokyo',
   minHourlyCustomers : 3,
@@ -221,3 +221,95 @@ tokyoLocation.calculateStoreInfo();
 tokyoLocation.renderToPage();
 
 // ====above here is all Tokyo Location object ============
+
+
+// =============Dubai Location=========================
+var dubaiLocation = {
+  name : 'Dubai',
+  minHourlyCustomers : 11,
+  maxHourlyCustomers : 38,
+  avgCookiesPerCustomer : 3.7,
+  hoursOpen : ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'],
+  //STORE the amount of cookies purchased per hour in an array property of the Location object
+  cookiesSoldPerHour : [],
+  // per day
+  totalCookiesSoldPerDay : 0,
+  picture : 'https://www.burjkhalifa.ae/en/Images/BurjKhalifa-02982_new_tcm290-85702.jpg',
+
+  // 4. Method to generate random number of customers per hour (with Min and Max) - Objects/Math/random
+  calculateRandNumOfCust : function() {
+    var min = this.minHourlyCustomers;
+    var max = this.maxHourlyCustomers;
+    return Math.round(Math.random() * (max - min) + min);
+  },
+
+  // define another method that uses a for loop and calls calculateRandNumOfCust
+  calculateNumCustPerHour : function(){
+    // -put into an array from there. var numCustPerHour = []
+    var numCustPerHour = [];
+    for(var i = 0; i < this.hoursOpen.length; i++) {
+      numCustPerHour.push(this.calculateRandNumOfCust());
+    }
+    return numCustPerHour;
+  },
+
+  // NOTE: when using a forloop, the i references the index in the array.length, so that's the same array you use when adding code to the code block { }
+
+  // 5. For each Hour of Operation (6:00AM to 8:00PM all stores), calculate the amount of Cookies Sold
+  calculateCookiesSoldPerHour : function(numCustPerHour) {
+    var cookiesSoldPerHour = [];
+    for(var i = 0; i < numCustPerHour.length; i++) {
+      cookiesSoldPerHour.push(numCustPerHour[i] * this.avgCookiesPerCustomer);
+    }
+    return cookiesSoldPerHour;
+  },
+
+  calculateTotalCookiesSoldPerDay : function(cookiesSoldPerHour) {
+    var totalCookiesSoldPerDay = 0;
+    for(var i = 0; i < cookiesSoldPerHour.length; i++) {
+      totalCookiesSoldPerDay += cookiesSoldPerHour[i];
+    }
+    return totalCookiesSoldPerDay;
+  },
+};
+
+//groups all of the functions together, in one function call, and links them together
+dubaiLocation.calculateStoreInfo = function() {
+  var numCustPerHour = this.calculateNumCustPerHour();
+
+  //uses numCustPerHour to calculate how many cookies were sold each hour
+  this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
+
+  //uses the cookies sold per hour to calc how many cookies were sold each day
+  this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
+};
+
+//====================== Render to Page using DOM ================
+dubaiLocation.renderToPage = function() {
+  // 1. Find target
+  var targetUlEl = document.getElementById('dubaiCookieStore');
+  // i. src link for image
+  var newImageEl = document.createElement('img');
+  newImageEl.src = this.picture;
+  targetUlEl.appendChild(newImageEl);
+  // forloop to create list items elements for all hours open and cookies sold per hour
+  for(var i = 0; i < this.hoursOpen.length; i++) {
+    // 2. Create Content
+    // a. li
+    var newLiEl = document.createElement('li');
+    // b. text
+    var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
+    newLiEl.textContent = liText;
+
+    // 3. Add content to the target
+    targetUlEl.appendChild(newLiEl);
+  }
+};
+
+//======================End of render function ==================
+
+// FUNCTION CALLS for Seattle location
+dubaiLocation.calculateStoreInfo();
+dubaiLocation.renderToPage();
+
+// ====above here is all Seattle Location object ============
