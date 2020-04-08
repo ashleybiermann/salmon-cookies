@@ -129,7 +129,7 @@ seattleLocation.renderToPage();
 
 // ======= creates variables for each store location using the constructor Store ==============================
 
-var cookieStoreSeattle = new Store('Seattle', 23, '65', 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
+var cookieStoreSeattle = new Store('Seattle', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
 
 // ==== Constructor function for city loctions =============
 
@@ -148,26 +148,53 @@ function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCusto
 
 Store.prototype.calculateRandNumOfCust = function(){
   // return random number
+  var min = this.minHourlyCustomers;
+  var max = this.maxHourlyCustomers;
+
   console.log('generates random number of customers');
+  return Math.round(Math.random() * (max - min) + min);
 };
 
 Store.prototype.calculateNumCustPerHour = function(){
   // return number of customers per hour
-  console.log('calculates number of customers per hour');
+  // -put into an array from there. var numCustPerHour = []
+  var numCustPerHour = [];
+  for(var i = 0; i < this.hoursOpen.length; i++) {
+    numCustPerHour.push(this.calculateRandNumOfCust());
+  }
+  console.log('calculates number of customers per hour: ' + numCustPerHour);
+  return numCustPerHour;
 };
 
-Store.prototype.calculateCookiesSoldPerHour = function(){
+Store.prototype.calculateCookiesSoldPerHour = function(numCustPerHour){
   // return number of cookies sold per hour
-  console.log('calculates cookies sold per hour');
+  var cookiesSoldPerHour = [];
+  for(var i = 0; i < numCustPerHour.length; i++) {
+    cookiesSoldPerHour.push(numCustPerHour[i] * this.avgCookiesPerCustomer);
+  }
+  console.log('calculates cookies sold per hour: ' + cookiesSoldPerHour);
+  return cookiesSoldPerHour;
 };
 
-Store.prototype.calculateTotalCookiesSoldPerDay = function(){
-  // return total number of cookies sold each day
-  console.log('calculates total cookies sold per day ');
+Store.prototype.calculateTotalCookiesSoldPerDay = function(cookiesSoldPerHour) {
+  var totalCookiesSoldPerDay = 0;
+  for(var i = 0; i < cookiesSoldPerHour.length; i++) {
+    totalCookiesSoldPerDay += cookiesSoldPerHour[i];
+  }
+  console.log('calculates total cookies sold per day: ' + totalCookiesSoldPerDay);
+  return totalCookiesSoldPerDay;
+
 };
 
 Store.prototype.calculateStoreInfo = function(){
   // calls Rand, NumCust, CookiesperHour, totalCookies functions
+  var numCustPerHour = this.calculateNumCustPerHour();
+
+  //uses numCustPerHour to calculate how many cookies were sold each hour
+  this.cookiesSoldPerHour = this.calculateCookiesSoldPerHour(numCustPerHour);
+
+  //uses the cookies sold per hour to calc how many cookies were sold each day
+  this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
   console.log('calculates store info, by calling RandNum, NumCust, CookiesPerHour, TotalCookies');
 };
 
@@ -176,15 +203,14 @@ Store.prototype.renderToPage = function(){
   console.log('renders to page');
 };
 
-cookieStoreSeattle.calculateRandNumOfCust();
-cookieStoreSeattle.calculateNumCustPerHour();
-cookieStoreSeattle.calculateCookiesSoldPerHour();
-cookieStoreSeattle.calculateTotalCookiesSoldPerDay();
+// cookieStoreSeattle.calculateRandNumOfCust();
+// cookieStoreSeattle.calculateNumCustPerHour();
+// cookieStoreSeattle.calculateCookiesSoldPerHour();
+// cookieStoreSeattle.calculateTotalCookiesSoldPerDay();
 cookieStoreSeattle.calculateStoreInfo();
 cookieStoreSeattle.renderToPage();
 
 //2) Uses constructor 'Store' to create a new instance of Store for Seattle TODO: Check on total cookies sold per hour [] and total cookies sold each day and look for values
-var cookieStoreSeattle = new Store('Seattle', 23, '65', 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
 
 
 //TODO: 3) Then - place data in table using comment instructions from line 78
