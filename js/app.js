@@ -94,44 +94,49 @@ seattleLocation.renderStoreInfoToPage = function() {
 // 2 Create content
 // 3 add the content to the target
 //=============================End==============================
-// =====Places each Hour of Operation into its own List Item =======
-for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
-  // 1 Need a target - retrieving targetable id from HTML
-  var unOrderedListEl = document.getElementById('hourOfOperation');
-  // 2 creating content - document.createElement() MAKES a DOM element
-  //DOES NOT put it on the PAGE
-  var newListItemEl = document.createElement('li');
-  newListItemEl.textContent = seattleLocation.hoursOpen[i];
-  // 3 add content to target
-  //append the new li to the unordered list
-  unOrderedListEl.appendChild(newListItemEl);
-}
+// // =====Places each Hour of Operation into its own List Item =======
+// for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
+//   // 1 Need a target - retrieving targetable id from HTML
+//   var unOrderedListEl = document.getElementById('hourOfOperation');
+//   // 2 creating content - document.createElement() MAKES a DOM element
+//   //DOES NOT put it on the PAGE
+//   var newListItemEl = document.createElement('li');
+//   newListItemEl.textContent = seattleLocation.hoursOpen[i];
+//   // 3 add content to target
+//   //append the new li to the unordered list
+//   unOrderedListEl.appendChild(newListItemEl);
+// }
 //=================End=================================================
 //================ Render to Page using DOM =========================
 seattleLocation.renderToPage = function() {
   // 1. Find target
   var targetUlEl = document.getElementById('cookieStore');
-  // 2. Create Content
-  // a. li
-  var newLiEl = document.createElement('li');
-  // b. text then image
-  var liText = this.hoursOpen[0] + ': ' + this.cookiesSoldPerHour[0] + ' cookies';
-  newLiEl.textContent = liText;
-
   // i. src link for image
   var newImageEl = document.createElement('img');
   newImageEl.src = this.picture;
-  newLiEl.appendChild(newImageEl);
+  targetUlEl.appendChild(newImageEl);
+
+  // 2. Create Content
+  // a. li
+  var newLiEl = document.createElement('li');
+  // b. text
+
+//TODO: use forloop all indicies
+  var liText = this.hoursOpen[0] + ': ' + this.cookiesSoldPerHour[0] + ' cookies';
+  newLiEl.textContent = liText;
 
   // 3. Add content to the target
   targetUlEl.appendChild(newLiEl);
 };
-seattleLocation.renderToPage();
+
 //======================End==========================
 
 // FUNCTION CALLS for Seattle location
 seattleLocation.calculateStoreInfo();
-seattleLocation.renderStoreInfoToPage();
+seattleLocation.renderToPage();
+
+//uses document.write - TODO: get rid of the need for this
+// seattleLocation.renderStoreInfoToPage();
 
 // ==========above here is all Seattle Location object =================
 
@@ -215,7 +220,7 @@ var renderStoreInfoToPage = function() {
 
 // FUNCTION CALLS for Tokyo location
 tokyoLocation.calculateStoreInfo();
-renderStoreInfoToPage();
+// renderStoreInfoToPage();
 
 // =============Dubai Location=========================
 var dubaiLocation = {
@@ -295,7 +300,7 @@ var renderStoreInfoToPage = function() {
 
 // FUNCTION CALLS for Tokyo location
 dubaiLocation.calculateStoreInfo();
-renderStoreInfoToPage();
+// renderStoreInfoToPage();
 
 
 
