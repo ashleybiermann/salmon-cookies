@@ -97,7 +97,7 @@ seattleLocation.calculateStoreInfo = function() {
 // }
 //=================End=========================================
 
-//====================== Render to Page using DOM ================
+//=============== Render Seatle to Page using DOM ================
 seattleLocation.renderToPage = function() {
   // 1. Find target
   var targetUlEl = document.getElementById('seattleCookieStore');
@@ -127,7 +127,18 @@ seattleLocation.renderToPage();
 
 // ====above here is all Seattle Location object ============
 
-
+// ==== Constructor function for city loctions =============
+function storeLocation (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture) {
+  this.storeLocation = city;
+  this.minHourlyCustomers = minHourlyCustomers;
+  this.maxHourlyCustomers = maxHourlyCustomers;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.hoursOpen = hoursOpen;
+  this.picture = picture;
+  this.cookiesSoldPerHour = [];
+  this.totalCookiesSoldPerDay = 0;
+  // this.calculateRandNumOfCust = 
+}
 
 // =============Tokyo Location=========================
 //
