@@ -93,7 +93,7 @@ seattleLocation.renderStoreInfoToPage = function() {
 // referring to it in the JS with <document.getElementById()>
 // 2 Create content
 // 3 add the content to the target
-//=================================================================
+//=============================End==============================
 // =====Places each Hour of Operation into its own List Item =======
 for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
   // 1 Need a target - retrieving targetable id from HTML
@@ -106,7 +106,8 @@ for(var i = 0; i < seattleLocation.hoursOpen.length; i++){
   //append the new li to the unordered list
   unOrderedListEl.appendChild(newListItemEl);
 }
-
+//=================End=================================================
+//================ Render to Page using DOM =========================
 seattleLocation.renderToPage = function() {
   // 1. Find target
   var targetUlEl = document.getElementById('cookieStore');
@@ -114,25 +115,27 @@ seattleLocation.renderToPage = function() {
   // a. li
   var newLiEl = document.createElement('li');
   // b. text then image
-  var liText = this.hoursOpen + ': ' + this.cookiesSoldPerHour + ' cookies';
+  var liText = this.hoursOpen[0] + ': ' + this.cookiesSoldPerHour[0] + ' cookies';
   newLiEl.textContent = liText;
 
   // i. src link for image
   var newImageEl = document.createElement('img');
   newImageEl.src = this.picture;
   newLiEl.appendChild(newImageEl);
-  console.log(newLiEl);
+
   // 3. Add content to the target
   targetUlEl.appendChild(newLiEl);
 };
 seattleLocation.renderToPage();
+//======================End==========================
 
 // FUNCTION CALLS for Seattle location
 seattleLocation.calculateStoreInfo();
 seattleLocation.renderStoreInfoToPage();
 
-// ========^^^ replace document.write with getElementById ^^====
-// ====================above here is all Seattle Location object =================
+// ==========above here is all Seattle Location object =================
+
+
 
 // =============Tokyo Location=========================
 var tokyoLocation = {
