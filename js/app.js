@@ -47,7 +47,6 @@ var seattleLocation = {
   // NOTE: when using a forloop, the i references the index in the array.length, so that's the same array you use when adding code to the code block { }
 
   // 5. For each Hour of Operation (6:00AM to 8:00PM all stores), calculate the amount of Cookies Sold
-
   calculateCookiesSoldPerHour : function(numCustPerHour) {
     var cookiesSoldPerHour = [];
     for(var i = 0; i < numCustPerHour.length; i++) {
@@ -112,7 +111,7 @@ seattleLocation.renderToPage = function() {
     // a. li
     var newLiEl = document.createElement('li');
     // b. text
-    var liText = this.hoursOpen[i] + ': ' + this.cookiesSoldPerHour[i] + ' cookies';
+    var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
     newLiEl.textContent = liText;
 
     // 3. Add content to the target
@@ -207,7 +206,7 @@ tokyoLocation.renderToPage = function() {
     // a. li
     var newLiEl = document.createElement('li');
     // b. text
-    var liText = this.hoursOpen[i] + ': ' + this.cookiesSoldPerHour[i] + ' cookies';
+    var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
     newLiEl.textContent = liText;
 
     // 3. Add content to the target
