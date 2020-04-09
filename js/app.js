@@ -41,7 +41,7 @@ Store.prototype.calculateRandNumOfCust = function(){
   var min = this.minHourlyCustomers;
   var max = this.maxHourlyCustomers;
 
-  console.log('generates random number of customers');
+  // console.log('generates random number of customers');
   return Math.round(Math.random() * (max - min) + min);
 };
 
@@ -51,7 +51,7 @@ Store.prototype.calculateNumCustPerHour = function(){
   for(var i = 0; i < this.hoursOpen.length; i++) {
     numCustPerHour.push(this.calculateRandNumOfCust());
   }
-  console.log('calculates number of customers per hour: ' + numCustPerHour);
+  // console.log('calculates number of customers per hour: ' + numCustPerHour);
   return numCustPerHour;
 };
 
@@ -60,7 +60,7 @@ Store.prototype.calculateCookiesSoldPerHour = function(numCustPerHour){
   for(var i = 0; i < numCustPerHour.length; i++) {
     cookiesSoldPerHour.push(numCustPerHour[i] * this.avgCookiesPerCustomer);
   }
-  console.log('calculates cookies sold per hour: ' + cookiesSoldPerHour);
+  // console.log('calculates cookies sold per hour: ' + cookiesSoldPerHour);
   return cookiesSoldPerHour;
 };
 
@@ -69,7 +69,7 @@ Store.prototype.calculateTotalCookiesSoldPerDay = function(cookiesSoldPerHour) {
   for(var i = 0; i < cookiesSoldPerHour.length; i++) {
     totalCookiesSoldPerDay += cookiesSoldPerHour[i];
   }
-  console.log('calculates total cookies sold per day: ' + totalCookiesSoldPerDay);
+  // console.log('calculates total cookies sold per day: ' + totalCookiesSoldPerDay);
   return totalCookiesSoldPerDay;
 };
 
@@ -82,7 +82,7 @@ Store.prototype.calculateStoreInfo = function(){
 
   //uses the cookies sold per hour to calc how many cookies were sold each day
   this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
-  console.log('calculates store info, by calling RandNum, NumCust, CookiesPerHour, TotalCookies');
+  // console.log('calculates store info, by calling RandNum, NumCust, CookiesPerHour, TotalCookies');
 };
 
 Store.prototype.renderToPage = function(){
@@ -107,7 +107,7 @@ Store.prototype.renderToPage = function(){
     // 3. Add content to the target
     targetUlEl.appendChild(newLiEl);
   }
-  console.log('renders to page');
+  // console.log('renders to page');
 };
 
 // FUNCTION CALLS , Woo! One call to control them all!
@@ -116,6 +116,19 @@ tokyoLocation.renderToPage();
 dubaiLocation.renderToPage();
 parisLocation.renderToPage();
 limaLocation.renderToPage();
+
+// ===Lab09 Form, and rendering it to page =======
+// 1 Find a target
+var e = document.getElementById('cookieStoreForm');
+
+// 3 Attach callback function
+function handleStoreForm(e){
+  e.preventDefault();
+  console.log('BAHAHAHAHA');
+}
+
+// 2 Add event listener
+e.addEventListener('submit', handleStoreForm);
 
 //TODO: 3) Then - place data in table using comment instructions from line 78
 
