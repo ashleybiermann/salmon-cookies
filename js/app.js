@@ -119,16 +119,23 @@ limaLocation.renderToPage();
 
 // ===Lab09 Form, and rendering it to page =======
 // 1 Find a target
-var e = document.getElementById('cookieStoreForm');
+var storeSubmitClicked = document.getElementById('cookieStoreForm');
 
 // 3 Attach callback function
-function handleStoreForm(e){
-  e.preventDefault();
-  console.log('BAHAHAHAHA');
+function handleStoreForm(storeSubmitClicked){
+  storeSubmitClicked.preventDefault();
+  var city = storeSubmitClicked.target.city.value;
+  var minHourlyCustomers = storeSubmitClicked.target.minHourlyCustomers.value;
+  var maxHourlyCustomers = storeSubmitClicked.target.maxHourlyCustomers.value;
+  var avgCookiesPerCustomer = storeSubmitClicked.target.avgCookiesPerCustomer.value;
+  var hoursOpen = storeSubmitClicked.target.hoursOpen.value;
+  var picture = storeSubmitClicked.target.picture.value;
+
+  console.log('BAHAHAHAHA' + city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture);
 }
 
 // 2 Add event listener
-e.addEventListener('submit', handleStoreForm);
+storeSubmitClicked.addEventListener('submit', handleStoreForm);
 
 //TODO: 3) Then - place data in table using comment instructions from line 78
 
