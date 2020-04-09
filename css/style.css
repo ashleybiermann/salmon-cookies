@@ -1,8 +1,27 @@
+/* change style with TOP or RIGHT */
 * {
   outline: 1px dotted red;
+}
+
+body {
+  background-color: bisque;
+}
+
+nav {
+  width: 960px;
+}
+
+nav img {
+  float: left;
+  margin-right: 20px;
 }
 
 img {
   max-width: 150px;
   max-height: 150px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 40px;
 }
