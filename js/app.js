@@ -10,14 +10,22 @@ var newText = 'Salmon Cookie Sales';
 h1Target.textContent = newText;
 // //==============================================================
 
-// Variables for each store location using the constructor Store ==============================
+// Uses constructor 'Store' to create a new instances of Store for Seattle, Tokyo, Dubai, Paris, Lima
 
-// Uses constructor 'Store' to create a new instance of Store for Seattle
-var cookieStoreSeattle = new Store('Seattle', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
+var seattleLocation = new Store('Seattle', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
+
+var tokyoLocation = new Store('Tokyo', 3, 24, 1.2, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'],'https://www.gotokyo.org/shared/site_gotokyo/images/visual_img.jpg.pagespeed.ce.F7FElN_QHa.jpg');
+
+var dubaiLocation = new Store('Dubai', 11, 24, 3.7, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'http://www.travelstart.co.za/blog/wp-content/uploads/2018/05/burjkhalifa.jpg');
+
+var parisLocation = new Store('Paris', 20, 38, 2.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg');
+
+var limaLocation = new Store('Lima', 2, 16, 4.6, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://i.insider.com/570cb304dd08959f7d8b465e?width=1100&format=jpeg&auto=webp');
 
 // ==== Constructor function for city loctions =============
 
 function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture) {
+  this.id = city;
   this.storeLocation = city;
   this.minHourlyCustomers = minHourlyCustomers;
   this.maxHourlyCustomers = maxHourlyCustomers;
@@ -29,7 +37,6 @@ function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCusto
 }
 
 // Methods attached to object
-
 Store.prototype.calculateRandNumOfCust = function(){
   var min = this.minHourlyCustomers;
   var max = this.maxHourlyCustomers;
@@ -66,7 +73,6 @@ Store.prototype.calculateTotalCookiesSoldPerDay = function(cookiesSoldPerHour) {
   return totalCookiesSoldPerDay;
 };
 
-// One function to control them all!
 Store.prototype.calculateStoreInfo = function(){
   // calls Rand, NumCust, CookiesperHour, totalCookies functions
   var numCustPerHour = this.calculateNumCustPerHour();
@@ -80,9 +86,11 @@ Store.prototype.calculateStoreInfo = function(){
 };
 
 Store.prototype.renderToPage = function(){
+  // Makes the call that calls some other functions to run
+  this.calculateStoreInfo();
   // renders to page - only one <ul> and many <li> in it
   // 1. Find target
-  var targetUlEl = document.getElementById('seattleCookieStore');
+  var targetUlEl = document.getElementById(this.id);
   // i. src link for image
   var newImageEl = document.createElement('img');
   newImageEl.src = this.picture;
@@ -102,10 +110,12 @@ Store.prototype.renderToPage = function(){
   console.log('renders to page');
 };
 
-// FUNCTION CALLS , Woo!
-cookieStoreSeattle.calculateStoreInfo();
-cookieStoreSeattle.renderToPage();
-
+// FUNCTION CALLS , Woo! One call to control them all!
+seattleLocation.renderToPage();
+tokyoLocation.renderToPage();
+dubaiLocation.renderToPage();
+parisLocation.renderToPage();
+limaLocation.renderToPage();
 
 //TODO: 3) Then - place data in table using comment instructions from line 78
 
