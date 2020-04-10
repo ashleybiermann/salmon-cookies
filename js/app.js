@@ -8,29 +8,29 @@ var h1Target = document.getElementById('pageTitle');
 var newText = 'Salmon Cookie Sales';
 // 3. add content to the target
 h1Target.textContent = newText;
-// //==============================================================
+//==============================================================
 
 // Uses constructor 'Store' to create a new instances of Store for Seattle, Tokyo, Dubai, Paris, Lima
 
-var seattleLocation = new Store('Seattle', 23, 65, 6.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
+var seattleLocation = new Store('Seattle', 23, 65, 6.3, 'https://upload.wikimedia.org/wikipedia/commons/2/23/Space_Needle_2011-07-04.jpg');
 
-var tokyoLocation = new Store('Tokyo', 3, 24, 1.2, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'],'https://www.gotokyo.org/shared/site_gotokyo/images/visual_img.jpg.pagespeed.ce.F7FElN_QHa.jpg');
+var tokyoLocation = new Store('Tokyo', 3, 24, 1.2,'https://www.gotokyo.org/shared/site_gotokyo/images/visual_img.jpg.pagespeed.ce.F7FElN_QHa.jpg');
 
-var dubaiLocation = new Store('Dubai', 11, 24, 3.7, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'http://www.travelstart.co.za/blog/wp-content/uploads/2018/05/burjkhalifa.jpg');
+var dubaiLocation = new Store('Dubai', 11, 24, 3.7, 'http://www.travelstart.co.za/blog/wp-content/uploads/2018/05/burjkhalifa.jpg');
 
-var parisLocation = new Store('Paris', 20, 38, 2.3, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg');
+var parisLocation = new Store('Paris', 20, 38, 2.3, 'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateParis_Heroshutterstock_112137761.jpg');
 
-var limaLocation = new Store('Lima', 2, 16, 4.6, ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'], 'https://i.insider.com/570cb304dd08959f7d8b465e?width=1100&format=jpeg&auto=webp');
+var limaLocation = new Store('Lima', 2, 16, 4.6, 'https://i.insider.com/570cb304dd08959f7d8b465e?width=1100&format=jpeg&auto=webp');
 
 // ==== Constructor function for city loctions =============
 
-function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture) {
+function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, picture) {
   this.id = city;
   this.storeLocation = city;
   this.minHourlyCustomers = minHourlyCustomers;
   this.maxHourlyCustomers = maxHourlyCustomers;
   this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-  this.hoursOpen = hoursOpen;
+  this.hoursOpen = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
   this.picture = picture;
   this.cookiesSoldPerHour = [];
   this.totalCookiesSoldPerDay = 0;
@@ -110,7 +110,21 @@ Store.prototype.renderToPage = function(){
   // console.log('renders to page');
 };
 
-// FUNCTION CALLS , Woo! One call to control them all!
+var showAllStoreTotals = function(){
+  var targetUlEl = document.getElementById('Seattle');
+  var newLiEl = document.createElement('li');
+  var newText = 'total sales for all stores: ' + totalSalesAllStores;
+  newLiEl.textContent = newText;
+  newLiEl.id = 'deleteLast';
+  targetUlEl.appendChild(newLiEl);
+};
+
+var removeFinalRow = function(){
+  var toDelete = document.getElementById('deleteLast');
+  toDelete.remove();
+};
+
+// FUNCTION CALLS to render store locations ====
 seattleLocation.renderToPage();
 tokyoLocation.renderToPage();
 dubaiLocation.renderToPage();
@@ -121,21 +135,33 @@ limaLocation.renderToPage();
 // 1 Find a target
 var storeSubmitClicked = document.getElementById('cookieStoreForm');
 
-// 3 Attach callback function
+// 3 Attach callback function = renders new store to page
 function handleStoreForm(storeSubmitClicked){
   storeSubmitClicked.preventDefault();
   var city = storeSubmitClicked.target.city.value;
   var minHourlyCustomers = storeSubmitClicked.target.minHourlyCustomers.value;
   var maxHourlyCustomers = storeSubmitClicked.target.maxHourlyCustomers.value;
   var avgCookiesPerCustomer = storeSubmitClicked.target.avgCookiesPerCustomer.value;
-  var hoursOpen = storeSubmitClicked.target.hoursOpen.value;
   var picture = storeSubmitClicked.target.picture.value;
 
-  console.log('BAHAHAHAHA' + city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, hoursOpen, picture);
+  // create new store with user's information from form
+  var userStore = new Store(city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, picture);
+
+  userStore.renderToPage();
+
+  totalSalesAllStores = totalSalesAllStores + Math.ceil(userStore.totalCookiesSoldPerDay);
+  removeFinalRow();
+  showAllStoreTotals();
 }
 
 // 2 Add event listener
 storeSubmitClicked.addEventListener('submit', handleStoreForm);
 
-//TODO: 3) Then - place data in table using comment instructions from line 78
+//==============
+var totalSalesAllStores = Math.ceil(seattleLocation.totalCookiesSoldPerDay + tokyoLocation.totalCookiesSoldPerDay + dubaiLocation.totalCookiesSoldPerDay + parisLocation.totalCookiesSoldPerDay + limaLocation.totalCookiesSoldPerDay);
 
+//=== Function Call for Sales Totals
+showAllStoreTotals();
+//==============
+
+//TODO: 3) Then - place data in table using comment instructions from line 78
