@@ -1,6 +1,8 @@
 
 'use strict';
 
+var hoursOpen = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+
 // ======= Display the Title of the Page - Salmon Cookie Sales======
 // 1 Need target
 var h1Target = document.getElementById('pageTitle');
@@ -24,13 +26,13 @@ var limaLocation = new Store('Lima', 2, 16, 4.6, 'https://i.insider.com/570cb304
 
 // ==== Constructor function for city loctions =============
 
+
 function Store (city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, picture) {
-  this.id = city;
   this.storeLocation = city;
   this.minHourlyCustomers = minHourlyCustomers;
   this.maxHourlyCustomers = maxHourlyCustomers;
   this.avgCookiesPerCustomer = avgCookiesPerCustomer;
-  this.hoursOpen = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+  this.hoursOpen = hoursOpen;
   this.picture = picture;
   this.cookiesSoldPerHour = [];
   this.totalCookiesSoldPerDay = 0;
@@ -88,26 +90,19 @@ Store.prototype.calculateStoreInfo = function(){
 Store.prototype.renderToPage = function(){
   // Makes the call that calls some other functions to run
   this.calculateStoreInfo();
-  // renders to page - only one <ul> and many <li> in it
-  // 1. Find target
-  var targetUlEl = document.getElementById(this.id);
-  // i. src link for image
-  var newImageEl = document.createElement('img');
-  newImageEl.src = this.picture;
-  targetUlEl.appendChild(newImageEl);
-  // forloop to create list items elements for all hours open and cookies sold per hour
-  for(var i = 0; i < this.hoursOpen.length; i++) {
-    // 2. Create Content
-    // a. li
-    var newLiEl = document.createElement('li');
-    // b. text
-    var liText = this.hoursOpen[i] + ': ' + Math.ceil(this.cookiesSoldPerHour[i]) + ' cookies';
-    newLiEl.textContent = liText;
 
-    // 3. Add content to the target
-    targetUlEl.appendChild(newLiEl);
+  var newRow = document.createElement('tr');
+  var storeLocationCell = document.createElement('td');
+  storeLocationCell.textContent = this.storeLocation;
+  newRow.appendChild(storeLocationCell);
+
+  for(var i = 0; i < this.hoursOpen.length; i++) {
+    var newCell = document.createElement('td');
+    newCell.textContent = Math.ceil(this.cookiesSoldPerHour[i]);
+    newRow.appendChild(newCell);
   }
-  // console.log('renders to page');
+  var targetTable = document.getElementById('salesTable');
+  targetTable.appendChild(newRow);
 };
 
 var showAllStoreTotals = function(){
@@ -124,7 +119,27 @@ var removeFinalRow = function(){
   toDelete.remove();
 };
 
+
+//writes a table row
+var writeTableRow = function(rowData) {
+  var newRow = document.createElement('tr');
+  for(var i = 0; i < rowData.length; i++) {
+    var newCell = document.createElement('td');
+    newCell.textContent = rowData[i];
+    newRow.appendChild(newCell);
+  }
+  var salesTable = document.getElementById('salesTable');
+  salesTable.appendChild(newRow);
+};
+
+//makes a copy of hoursOpen array for table header
+var tableHeaderData = hoursOpen.slice();
+tableHeaderData.unshift('');
+
+writeTableRow(tableHeaderData);
+
 // FUNCTION CALLS to render store locations ====
+
 seattleLocation.renderToPage();
 tokyoLocation.renderToPage();
 dubaiLocation.renderToPage();
@@ -142,10 +157,10 @@ function handleStoreForm(storeSubmitClicked){
   var minHourlyCustomers = storeSubmitClicked.target.minHourlyCustomers.value;
   var maxHourlyCustomers = storeSubmitClicked.target.maxHourlyCustomers.value;
   var avgCookiesPerCustomer = storeSubmitClicked.target.avgCookiesPerCustomer.value;
-  var picture = storeSubmitClicked.target.picture.value;
+  // var picture = storeSubmitClicked.target.picture.value;
 
   // create new store with user's information from form
-  var userStore = new Store(city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer, picture);
+  var userStore = new Store(city, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer);
 
   userStore.renderToPage();
 
