@@ -3,6 +3,8 @@
 
 var hoursOpen = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
+var totalHourlyCookiesAll = new Array(hoursOpen.length).fill(0);
+
 // ======= Display the Title of the Page - Salmon Cookie Sales======
 // 1 Need target
 var h1Target = document.getElementById('pageTitle');
@@ -84,6 +86,7 @@ Store.prototype.calculateStoreInfo = function(){
 
   //uses the cookies sold per hour to calc how many cookies were sold each day
   this.totalCookiesSoldPerDay = this.calculateTotalCookiesSoldPerDay(this.cookiesSoldPerHour);
+
   // console.log('calculates store info, by calling RandNum, NumCust, CookiesPerHour, TotalCookies');
 };
 
@@ -105,24 +108,33 @@ Store.prototype.renderToPage = function(){
   targetTable.appendChild(newRow);
 };
 
-var showAllStoreTotals = function(){
-  var targetUlEl = document.getElementById('Seattle');
-  var newLiEl = document.createElement('li');
-  var newText = 'total sales for all stores: ' + totalSalesAllStores;
-  newLiEl.textContent = newText;
-  newLiEl.id = 'deleteLast';
-  targetUlEl.appendChild(newLiEl);
+// //total cookies per hour row
+var addCookieCountToTotal = function(cookiesSoldPerHour){
+  for(var i = 0; i < cookiesSoldPerHour.length; i++) {
+    totalHourlyCookiesAll[i] += cookiesSoldPerHour[i];
+  }
 };
 
-var removeFinalRow = function(){
-  var toDelete = document.getElementById('deleteLast');
+// Totals ALL stores sales per day
+var showAllStoreTotals = function(){
+  var targetTableEl = document.getElementById('salesTable');
+  var newRowEl = document.createElement('tr');
+  var newText = 'total sales for all stores: ' + totalSalesAllStores;
+  newRowEl.textContent = newText;
+  newRowEl.id = 'totalSales';
+  targetTableEl.appendChild(newRowEl);
+};
+
+var removeTotalSales = function(){
+  var toDelete = document.getElementById('totalSales');
   toDelete.remove();
 };
 
 
 //writes a table row
-var writeTableRow = function(rowData) {
+var writeTableRow = function(rowData, rowId) {
   var newRow = document.createElement('tr');
+  newRow.id = rowId;
   for(var i = 0; i < rowData.length; i++) {
     var newCell = document.createElement('td');
     newCell.textContent = rowData[i];
@@ -137,7 +149,6 @@ var tableHeaderData = hoursOpen.slice();
 tableHeaderData.unshift('');
 
 writeTableRow(tableHeaderData);
-
 // FUNCTION CALLS to render store locations ====
 
 seattleLocation.renderToPage();
@@ -146,6 +157,30 @@ dubaiLocation.renderToPage();
 parisLocation.renderToPage();
 limaLocation.renderToPage();
 
+// adding hourly sales to total
+addCookieCountToTotal(seattleLocation.cookiesSoldPerHour);
+addCookieCountToTotal(tokyoLocation.cookiesSoldPerHour);
+addCookieCountToTotal(dubaiLocation.cookiesSoldPerHour);
+addCookieCountToTotal(parisLocation.cookiesSoldPerHour);
+addCookieCountToTotal(limaLocation.cookiesSoldPerHour);
+
+// write total hourly sales to footer
+var showTotalHourlySales = function(){
+  var tableFooterData = totalHourlyCookiesAll.slice();
+
+  for(var i = 0; i < tableFooterData.length; i++) {
+    tableFooterData[i] = Math.ceil(tableFooterData[i]);
+  }
+
+  tableFooterData.unshift('Total: ');
+  var totalsRow = document.getElementById('totalsRow');
+  if (totalsRow) {
+    totalsRow.remove();
+  }
+  writeTableRow(tableFooterData, 'totalsRow');
+};
+
+showTotalHourlySales();
 // ===Lab09 Form, and rendering it to page =======
 // 1 Find a target
 var storeSubmitClicked = document.getElementById('cookieStoreForm');
@@ -164,8 +199,11 @@ function handleStoreForm(storeSubmitClicked){
 
   userStore.renderToPage();
 
+  showTotalHourlySales();
+
+  //puts total all stores for all day on the bottom
   totalSalesAllStores = totalSalesAllStores + Math.ceil(userStore.totalCookiesSoldPerDay);
-  removeFinalRow();
+  removeTotalSales();
   showAllStoreTotals();
 }
 
@@ -178,5 +216,3 @@ var totalSalesAllStores = Math.ceil(seattleLocation.totalCookiesSoldPerDay + tok
 //=== Function Call for Sales Totals
 showAllStoreTotals();
 //==============
-
-//TODO: 3) Then - place data in table using comment instructions from line 78
