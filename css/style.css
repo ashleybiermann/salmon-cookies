@@ -1,4 +1,56 @@
+/* change style with TOP or left */
+* {
+  outline: 1px dotted red;
+}
+
+header > nav {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header > nav > img {
+  float: left;
+}
+
+header > nav > ul > li {
+  float: left;
+  margin-left: 160px;
+}
+
+header > img {
+  float: left;
+  margin-left: 660px;
+  margin-top:
+}
+
+header > h1 {
+  float: left;
+  margin-left: 50px; 
+  font-size: 40px;
+}
+
+body {
+  width: 960px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto; 
+  background-color: bisque;
+}
+
 img {
   max-width: 150px;
   max-height: 150px;
+}
+
+body > section {
+  margin-top: 10px; 
+}
+
+body > section > ul > li > h2 {
+  font-size: 25px;
+}
+
+body > section > ul > li {
+  font-size: 18px;
 }

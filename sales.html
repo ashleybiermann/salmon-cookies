@@ -1,21 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title> Salmon Cookies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <title> Salmon Cookies</title>
   </head>
   <body>
+
+    <a href ="index.html">Back to Homepage</a>
+
     <h1 id="pageTitle"></h1>
 
-    <ul id="Seattle"></ul>
+    <!-- table for stores -->
 
-    <ul id="Tokyo"></ul>
+    <table id=salesTable>Cookie Sales</table>
 
-    <ul id="Dubai"></ul>
-    
-    <ul id="Paris"></ul>
+<!-- start of create your own store form -->
+    <form id="cookieStoreForm">
+      <fieldset>
+        <legend>Create Your Own Cookie Store!</legend>
 
-    <ul id="Lima"></ul>
+        <label for="city">Your City</label>
+        <input type="text" name="city">
+
+        <label for="minHourlyCustomers">Min Hourly Customers</label>
+        <input type="number" name="minHourlyCustomers">
+
+        <label for="maxHourlyCustomers">Max Hourly Customers</label>
+        <input type="number" name="maxHourlyCustomers">
+
+        <label for="avgCookiesPerCustomer">Avg Cookies per Customer</label>
+        <input type="text" name="avgCookiesPerCustomer">
+
+        <!-- <lable for="picture">Picture url</lable>
+        <input type="text" name="picture"> -->
+
+<!-- submit button -->
+        <input type="submit" value="View Your Store!">
+
+      </fieldset>
+    </form>
+<!-- form ends -->
 
     <script src="js/app.js"></script>
   </body>
